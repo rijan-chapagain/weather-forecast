@@ -1,0 +1,26 @@
+{
+	"$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Weather",
+	"description": "Weather Data",
+	"type": "object",
+	"properties": {
+		"weather": {
+          	"type": "object",
+			"properties": {
+				"record": {
+					"type": "array",
+					"properties": {
+						"date": { "type": "string" },
+						"time": { "type": "string" },
+						"ws": { "type": "number" },
+						"sr": { "type": "number" }
+					},
+					"required": ["date", "time", "ws", "sr"]
+				}
+			},
+            "required": ["record"]
+        }
+	},
+	"required": ["weather"]
+}
+

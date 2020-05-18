@@ -1,0 +1,15 @@
+<!-- x : means one only occurence of x -->
+<!-- x+ : one or more occurrences of x -->
+<!-- x* : zero or more occurrences of x -->
+<!-- x? : zero or one occurrences of x -->
+<!-- x,y : x followed by y -->
+<!-- x|y : x or y, but not both -->
+
+<!-- weather has one or more records -->
+<!ELEMENT weather (record+) >
+<!-- record has one or more records -->
+<!ELEMENT record (date, time, ws, sr) >
+<!ELEMENT date (#PCDATA) >
+<!ELEMENT time (#PCDATA) >
+<!ELEMENT ws (#PCDATA) >
+<!ELEMENT sr (#PCDATA) >
