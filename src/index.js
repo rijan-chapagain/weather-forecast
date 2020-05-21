@@ -1,18 +1,21 @@
 // import our exported modules
 var server = require("./server");
 var router = require("./router");
-var start = require("./requestHandlers/start");
-var view = require("./requestHandlers/view");
 var styles = require("./requestHandlers/styles");
+var start = require("./requestHandlers/start");
+var display = require("./requestHandlers/display");
+var download = require("./requestHandlers/download");
 
 // create ‘handle’ object literal
 // ***JSON format***
 var handle = {
-    "/css/styles.css" : styles.reqCss,
+    "/css" : styles.reqCss,
+    "/xsl" : styles.reqXsl,
     "/" : start.reqStart,
     "/start" : start.reqStart,
     "/check" : start.reqCheck,
-    "/view" : view.reqView
+    "/display" : display.reqDisplay,
+    "/download" : download.reqDownload
 };
 
-server.startServer(router.route, handle)
+server.startServer(router.route, handle);

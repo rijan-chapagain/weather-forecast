@@ -7,7 +7,7 @@ var url = require("url"); // import url core modules
  * @param {Function} route 
  * @param {object} handle 
  */
-function startServer(route, handle, request)
+function startServer(route, handle)
 {
       /**
        * use url module to get pathname of requested resource 
