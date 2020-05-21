@@ -14,7 +14,8 @@ function route(pathname, handle, request, response){
     else {
         console.log("No handler found for: " + pathname);
         response.writeHead(404, {"Content-Type": "text/html"});
-        response.write("<h3>Sorry, Resource not found! please check your URL and try again.</h3> <br> Cheers!!");
+        response.write("<h2>Sorry, Resource not found! </h2> Click the link below if you are looking for: "+
+        "<h2><a href='http://localhost:40310/start'> Rijan's Index page</a> </h2><br>  Cheers!!");
         response.end();
     }
 }
