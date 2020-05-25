@@ -4,8 +4,9 @@ const http = require('http');
 function reqDownload(result)
     {
         console.log("Request handler 'download' is downloading data file")
-        var delimeter = '-';
-        var year = (result.month).split(delimeter)[0];
+       
+        var year = (result.year);
+        console.log(year);
         
         if(year >= '2010')
         {
