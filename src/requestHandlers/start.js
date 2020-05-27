@@ -1,7 +1,8 @@
 var fs = require('fs');
+const http = require('http');
 const { parse } = require('querystring');
 var display = require('./display');
-// var view = require('./view');
+var download = require('./download');
 
 /**
  * send status report to server
@@ -33,7 +34,23 @@ function reqStart(request, response){
  */
 function reqCheck(request, response){
     console.log("Request handler 'check' is processing.");
-   
+    
+    collectRequestData(request, result => {
+        console.log(result);
+        download.reqDownload(result);
+        display.reqDisplay(request, response, result);
+
+        // if(`${result.output}`=== "both"){
+        //     reqStart(request, response);
+        // }
+        // else if(`${result.output}`=== ""){
+        //     reqStart(request, response);
+        // }
+        // else{
+        //     reqStart(request,response);
+        // }
+    });
+
     function collectRequestData(request, callback) {
         const FORM_URLENCODED = 'application/x-www-form-urlencoded';
         if(request.headers['content-type'] === FORM_URLENCODED) {
@@ -55,14 +72,8 @@ function reqCheck(request, response){
         else{
             callback(null);
         }
-    }
-
-    collectRequestData(request, result => {
-        console.log(result);
-        display.reqDisplay(request, response, result);
-        
-    });
-}
+    }//end of collectRequest function
+}//end of reqCheck function
 
 exports.reqStart = reqStart;
 exports.reqCheck = reqCheck;
