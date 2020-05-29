@@ -4,16 +4,16 @@ const $ = require( "jquery" )( window );
 const fs = require ('fs');
 
 
-// function reqPlugins(request, response){
-// 	fs.readFile('jqueryPlugins/canvasjs_charts.min.js', function(err, data)
-// 	{
-// 		if(err){throw(err);}
-// 		response.writeHead(200, {"Content-Type": "text/javascript"} );
-// 		response(data);
-// 		response.end();
-// 	});
+function reqPlugins(request, response){
+	fs.readFile('jqueryPlugins/canvasjs_charts.min.js', function(err, data)
+	{
+		if(err){throw(err);}
+		response.writeHead(200, {"Content-Type": "text/javascript"} );
+		response(data);
+		response.end();
+	});
 	
-// }
+}
 
 function reqJquery(){
 
@@ -69,3 +69,4 @@ $(function() {
 }
 
 exports.reqJquery = reqJquery;
+exports.reqPlugins = reqPlugins;
