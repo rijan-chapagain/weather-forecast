@@ -53,7 +53,7 @@ function reqCheck(request, response){
 
     function collectRequestData(request, callback) {
         const FORM_URLENCODED = 'application/x-www-form-urlencoded';
-        if(request.headers['content-type'] === FORM_URLENCODED) {
+        if(request.headers['content-type'] === FORM_URLENCODED){
             
             let body = [];
             
