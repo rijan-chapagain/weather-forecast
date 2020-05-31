@@ -9,7 +9,7 @@ function reqValidate(request, response)
 {
     console.log("Request handler 'reqValidate' was called.");
 
-    fs.readFile('js/htmlValidator.js', function (err, script) {
+    fs.readFile('./js/htmlValidator.js', function (err, script) {
         if (err) {
             throw err; 
         }   

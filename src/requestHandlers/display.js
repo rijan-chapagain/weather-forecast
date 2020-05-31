@@ -3,6 +3,7 @@ const { parse } = require('querystring');
 var xmldom = require('xmldom').DOMParser;
 var fs = require('fs');
 const xml2js = require('xml2js');
+var jsonxml;
 var parser, doc, tNodes;
 
 parser = new xmldom();
@@ -15,16 +16,17 @@ parser = new xmldom();
 function reqDisplay(request, response, result)
 {
     console.log("Request handler 'display' was called.");
-    display(response, result);
+    display(request, response, result);
 }
 
-function display(response, result)
+function display(request, response, result)
 {
     var year = (result.year);
     var sMonth = (result.sMonth);
     var eMonth = (result.eMonth);
+    var measure = (result.measure);
+    var format = (result.format);
 
-   
     if(year >= '2010')
     {
         year += '.json';
@@ -36,48 +38,57 @@ function display(response, result)
    
     var path = `../data/${year}`;
 
-    console.log(path)
-    
-    if(year.includes("xml"))
-    {
-        console.log("you are in xml file");
-        fs.readFile(path, 'utf-8', function (err, data) 
-        {
-            if (err)
-            {
-                throw err;
-            }
-            doc = parser.parseFromString(data, 'application/xml');
-            // tNodes = doc.getElementsByTagName('weather');
+    console.log(path)    
 
-            xml2js.parseString(doc, (err, result) => {
-                if(err) {
+    convertXml2Json(request, callbackresult => {
+        console.log(callbackresult);
+
+        // download.reqDownload(result);
+        // display.reqDisplay(request, response, result);
+    });
+
+    function convertXml2Json(request, callback) {
+        if(year.includes("xml"))
+        {
+            console.log("you are in xml file");
+            fs.readFile(path, 'utf-8', function (err, data) 
+            {
+                if (err)
+                {
                     throw err;
                 }
-            
-                // `result` is a JavaScript object
-                // convert it to a JSON string
-                const jsonxml = JSON.stringify(result, null, 4);
-                // console.log(typeof(jsonxml))
+                doc = parser.parseFromString(data, 'application/xml');
+                // tNodes = doc.getElementsByTagName('weather');
+
+                xml2js.parseString(doc, (err, result) => {
+                    if(err) {
+                        throw err;
+                    }
+                
+                    // `result` is a JavaScript object
+                    // convert it to a JSON string
+                    jsonxml = JSON.stringify(result, null, 4);
+                    callback(jsonxml);
+                });
             });
+        }
 
-        });
-    }
-
-    if(year.includes("json"))
-    {
-        console.log("you are in json file");
-        fs.readFile(path, 'utf-8', function (err, data) 
+        if(year.includes("json"))
         {
-            if (err)
+            console.log("you are in json file");
+            fs.readFile(path, 'utf-8', function (err, data) 
             {
-                throw err;
-            }
-            // console.log(typeof(data));
-        });
-    }
-
-
+                if (err)
+                {
+                    throw err;
+                }
+                callback(data);
+            });
+        }
+        else{
+            callback(null);
+        }
+    }//end of collectRequest function
 }
 
 exports.reqDisplay = reqDisplay;

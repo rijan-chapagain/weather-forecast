@@ -40,10 +40,10 @@ function reqCheck(request, response){
         download.reqDownload(result);
         display.reqDisplay(request, response, result);
 
-        // if(`${result.output}`=== "both"){
+        // if(`${result.format}`=== "both"){
         //     reqStart(request, response);
         // }
-        // else if(`${result.output}`=== ""){
+        // else if(`${result.format}`=== ""){
         //     reqStart(request, response);
         // }
         // else{

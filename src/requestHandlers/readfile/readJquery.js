@@ -1,18 +1,9 @@
 const fs = require('fs');
-// console.log("jquery read successfully");
 
-function reqJquery(request, response){
-	console.log("request handler 'jquery' is reading plugins and file");
+function reqJqueryGraph(request, response){
+	console.log("request handler 'jqueryGraph' is reading file");
 
-	// fs.readFile('jqueryPlugins/canvasjs_charts.min.js', function(err, data)
-	// {
-	// 	if(err){throw(err);}
-	// 	response.writeHead(200, {"Content-Type": "text/javascript"} );
-	// 	response(data);
-	// 	response.end();
-	// });
-
-	fs.readFile('js/jquery.js', function(err, query)
+	fs.readFile('./js/jqueryGraph.js', function(err, query)
 	{
 		console.log("jquery is reading file.");
 
@@ -20,9 +11,23 @@ function reqJquery(request, response){
 		response.writeHead(200, {"Content-Type": "text/javascript"} );
 		response.write(query);
 		response.end();
-		console.log("jquery read successfully");
+		console.log("Graph read successfully");
 	});
-
 }
 
-exports.reqJquery = reqJquery;
+function reqJqueryTable(request, response){
+	console.log("request handler 'jqueryTable' is reading file");
+
+	fs.readFile('./js/jqueryTable.js', function(err, tableData)
+	{
+		console.log("jquery is reading table.");
+		if(err){throw(err);}
+		response.writeHead(200, {"Content-Type": "text/javascript"} );
+		response.write(tableData);
+		response.end();
+		console.log("jquery read successfully");
+	});
+}
+
+exports.reqJqueryGraph = reqJqueryGraph;
+exports.reqJqueryTable = reqJqueryTable;

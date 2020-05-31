@@ -9,7 +9,7 @@ function reqCss(request, response)
 {
     console.log("Request handler 'css' was called.");
 
-    fs.readFile('stylesheets/css/styles.css', function (err, style) {
+    fs.readFile('./stylesheets/css/styles.css', function (err, style) {
         if (err) {
             throw err; 
         }   
@@ -28,7 +28,7 @@ function reqXsl(request, response)
 {
     console.log("Request handler 'Xsl' was called.");
 
-    fs.readFile('stylesheets/xsl/tohtml.xsl', function (err, style) {
+    fs.readFile('./stylesheets/xsl/tohtml.xsl', function (err, style) {
         if (err) {
             throw err; 
         }   
