@@ -16,14 +16,15 @@ function calculation(request, response, callbackResult, result)
 
     var count = "";
     var countArray = [count,count,count,count,count,count,count,count,count,count,count,count,];
-    // var weatherObj = [];
-    console.log("date obj ", weatherObj)
 
     for(var i=0; i<callbackResult.length; i++)
     {
-        currentws = callbackResult[i]['ws'] * 3.6;
-        currentsr = callbackResult[i]['sr'] / 3600000;
-
+        var currentws = callbackResult[i]['ws'] * 3.6;
+        var currentsr = 0;
+        if(callbackResult[i]['sr'] >= 100)
+        {
+            currentsr = callbackResult[i]['sr'] / 3600000;
+        }
         var month = callbackResult[i]['date'].slice(3,5);
         
         currentws += weatherObjArray[month-1]['totalWs'];
@@ -38,11 +39,36 @@ function calculation(request, response, callbackResult, result)
         }
     }
     
-    console.log("count is:  ", countArray);
-    console.log("weather obj outside loop: ", weatherObjArray);
+    // console.log("count is:  ", countArray);
+    for(var i=0; i<12; i++)
+    {
+        delete weatherObjArray[i]['totalWs'];
+    }
+
+    console.log("weatheeObjArray: ", weatherObjArray);
     
-    // sendData(request, response, callbackResult, result);
+    // sendData(request, response, weatherObjArray);
 }
 
+function sendData(request, response, weatherObjArray){
+    var url = request.url.slice(0,5);
+    console.log(weatherObjArray);
+
+    if (url === "/data") {
+
+        response.writeHead(200, { 'Content-Type': 'application/json' });
+        // response.write(JSON.stringify({ now: new Date() }));
+        response.write("asdfghj");
+        console.log("reasult in calculation are: ");
+        response.end();
+
+    } else {
+
+        response.end('Invalid request');
+        console.log("invalid request");
+        console.log(url)
+    }
+}
 
 exports.calculation = calculation;
+exports.sendData = sendData;

@@ -21,9 +21,6 @@ function reqDisplay(request, response, result)
 function display(request, response, result)
 {
     var year = (result.year);
-    var sMonth = (result.sMonth);
-    var eMonth = (result.eMonth);
-    var measure = (result.measure);
     var format = (result.format);
 
     if(year >= '2010')
