@@ -1,10 +1,9 @@
 var fs = require('fs');
-const { parse } = require('querystring');
 var xmldom = require('xmldom').DOMParser;
 var fs = require('fs');
 const xml2js = require('xml2js');
-var jsonxml;
 var parser, doc, tNodes;
+var processing = require('./processing');
 
 parser = new xmldom();
 
@@ -40,13 +39,6 @@ function display(request, response, result)
 
     console.log(path)    
 
-    convertXml2Json(request, callbackresult => {
-        console.log(callbackresult);
-
-        // download.reqDownload(result);
-        // display.reqDisplay(request, response, result);
-    });
-
     function convertXml2Json(request, callback) {
         if(year.includes("xml"))
         {
@@ -60,20 +52,19 @@ function display(request, response, result)
                 doc = parser.parseFromString(data, 'application/xml');
                 // tNodes = doc.getElementsByTagName('weather');
 
-                xml2js.parseString(doc, (err, result) => {
+                xml2js.parseString(doc, { explicitArray : false }, (err, result) => {
                     if(err) {
                         throw err;
                     }
                 
-                    // `result` is a JavaScript object
-                    // convert it to a JSON string
-                    jsonxml = JSON.stringify(result, null, 4);
-                    callback(jsonxml);
+                    var recordData = result.weather.record;
+                    console.log(typeof(recordData));
+
+                    callback(recordData);
                 });
             });
         }
-
-        if(year.includes("json"))
+        else if(year.includes("json"))
         {
             console.log("you are in json file");
             fs.readFile(path, 'utf-8', function (err, data) 
@@ -82,13 +73,84 @@ function display(request, response, result)
                 {
                     throw err;
                 }
-                callback(data);
+                var jsonobj = JSON.parse(data);
+                var recordData = jsonobj.weather.record;
+
+                callback(recordData);
             });
         }
-        else{
+        else
+        {
             callback(null);
         }
     }//end of collectRequest function
+
+    convertXml2Json(request, callbackResult => {
+        // console.log(callbackResult);
+        // userRequest(callbackResult);
+        processing.calculation(request, response, callbackResult, result);
+    });
+
+    function userRequest(callbackResult)
+    {
+        //check user requested date
+        if(format === "table")
+        {
+            console.log("format was table");
+            
+            // console.log(callbackResult);
+
+        }
+        else if(format === "graph")
+        {
+            console.log("format was graph");
+            // 
+        }
+        else if(format === "both")
+        {
+            console.log("format was both");
+            // 
+        }
+
+        //output format
+        // if(format === "table")
+        // {
+        //     console.log("format was table");
+            
+        //     console.log(callbackResult);
+
+        // }
+        // else if(format === "graph")
+        // {
+        //     console.log("format was graph");
+        //     // 
+        // }
+        // else if(format === "both")
+        // {
+        //     console.log("format was both");
+        //     // 
+        // }
+
+        //output measure
+
+        // if(measure === "ws")
+        // {
+        //     console.log("measure was wind speed");
+            
+        //     console.log(callbackResult);
+
+        // }
+        // else if(measure === "sr")
+        // {
+        //     console.log("measure was solar radiation");
+        //     // 
+        // }
+        // else if(measure === "both")
+        // {
+        //     console.log("measure was both");
+        //     // 
+        // }
+    }
 }
 
 exports.reqDisplay = reqDisplay;
