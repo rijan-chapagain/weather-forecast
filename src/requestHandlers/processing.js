@@ -1,3 +1,7 @@
+var start = require('./start');
+var readJquery = require('./readfile/readJquery');
+
+
 
 /**
  * 
@@ -46,16 +50,19 @@ function calculation(request, response, callbackResult, result)
     }
 
     console.log("weatheeObjArray: ", weatherObjArray);
-    
+    readJquery.reqJqueryGraph(request,response);
     // sendData(request, response, weatherObjArray);
 }
 
 function sendData(request, response, weatherObjArray){
+
     var url = request.url.slice(0,5);
-    console.log(weatherObjArray);
+    // console.log(weatherObjArray);
+    console.log(url);
 
-    if (url === "/data") {
+    if (url === "/chec") {
 
+        start.reqCheck(request, response);
         response.writeHead(200, { 'Content-Type': 'application/json' });
         // response.write(JSON.stringify({ now: new Date() }));
         response.write("asdfghj");
