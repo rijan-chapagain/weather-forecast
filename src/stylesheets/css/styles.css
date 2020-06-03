@@ -43,9 +43,22 @@ input, .selectInterest{
     font-size: 20px;
 }
 
+a{
+    color:red;
+    font-size: 16px;
+    font-style: italic;
+}
+
 .measure{
     font-size: 30;
 
+}
+
+#sMonthTxt, #eMonthTxt{
+    text-transform: capitalize;
+}
+#myTable{
+    background-color: lightblue;
 }
 
 /* Thick red border */

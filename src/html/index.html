@@ -10,28 +10,39 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">        
         
         <!--build:css-->
+        <!--generic build:css-->
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
+        <!-- Custom CSS -->
+        <link rel="stylesheet" type="text/css" href="/css" />
+
+        <!--build:js-->
+        <!--generic build:js-->
         <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
         <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-        <script type="text/javascript" src="../js/jquery"></script>
-
-         <!-- Custom CSS -->
-        <link rel="stylesheet" type="text/css" href="/css" />
-             
+        <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+       
+        <!--Custom js-->
+        <!-- <script type="text/javascript" src="/js/jqueryGraph"></script> -->
+        <!-- <script type="text/javascript" src="/js/jqueryTable"></script> -->
+        <script type="text/javascript" src="/js/htmlValidator"></script>
+ 
         <!-- endbuild -->
+
         <title>Weather Forcast</title>
     </head>
     
     <body>
         <h1>Welcome to Weather view</h1> 
         <hr class="new4"> 
-        <form id="myForm"  method="POST">
+        <form id="myForm" name="myForm" action="/check" onsubmit="return validateForm()" method="POST">
 
             <!-- <label for="start">Start Year:</label>
             <input type="month" id="start" name="month" min="2007-01" max="2016-02" value="2008-01"><br><br> -->
 
             <label for="year">Year: </label>
-            <input type="text" list = "year" name="year" id="txt" value="2007" autofocus required>
-                <datalist name="year" id="year">
+            <input type="text" list = "year" name="year" id="yearTxt" value="2008" autofocus required>
+                <datalist name="years" id="year">
                     <option name="op1" value = "2007"></option>
                     <option name="op2" value = "2008"></option>
                     <option name="op3" value = "2009"></option>
@@ -43,8 +54,10 @@
                     <option name="op9" value = "2015"></option>
                     <option name="op10" value = "2016"></option>
                 </datalist>
-            <br><br>
-        
+            <a id="message"></a>
+            <br>
+            <br>
+         
             <label for="sMonth">Start Month: </label>
             <input type="text" list = "sMonth" name="sMonth" id="sMonthTxt" value="January" required>
                 <datalist name="sMonth" id="sMonth">
@@ -61,11 +74,13 @@
                     <option name="op11" value = "November"></option>
                     <option name="op12" value = "December"></option>
                 </datalist>
-                <br>
+            <a id="sMessage"></a>
+            <br>
+
             <label for="eMonth">End Month: </label>
             <input type="text" list = "eMonth" name="eMonth" id="eMonthTxt" value="December" required>
                 <datalist name="eMonth" id="eMonth">
-                    <!-- <option name="op1" value = "January"></option>
+                    <option name="op1" value = "January"></option>
                     <option name="op2" value = "Febuary"></option>
                     <option name="op3" value = "March"></option>
                     <option name="op4" value = "April"></option>
@@ -75,9 +90,10 @@
                     <option name="op8" value = "August"></option>
                     <option name="op9" value = "September"></option>
                     <option name="op10" value = "October"></option>
-                    <option name="op11" value = "November"></option> -->
+                    <option name="op11" value = "November"></option>
                     <option name="op12" value = "December"></option>
                 </datalist>
+            <a id="eMessage"></a>
             <br><br>
 
             <b>Measurements: </b>
@@ -86,14 +102,140 @@
             Both<input type="radio" name="measure" value="both" checked><br/><br/>
 
             <b>Output Format: </b>
-            Table<input type="radio" name="output" value="table" required checked>
-            Graph<input type="radio" name="output" value="graph">
-            Both<input type="radio" name="output" value="both"><br/><br/>
+            Table<input type="radio" name="format" value="table" required checked>
+            Graph<input type="radio" name="format" value="graph">
+            Both<input type="radio" name="format" value="both"><br/><br/>
+
+            <a id="messageDetail"></a>
+            <a id="sMessageDetail"></a>
+            <a id="eMessageDetail"></a><br>
             <input type="submit" class="submit" id="submit" name="submit" value="Submit">
-            <input type="reset" class="reset" name="reset" value="Reset"><br>             
+            <input type="reset" class="reset" name="reset" value="Reset"><br>       
+                  
+
+            
         </form>
+            
+        <!-- <button id="action-button">Click me to load info!</button> -->
+            <div id="info"></div>
+            
+        
         <hr class="new4"> 
+
         <div class="chartContainer" style="height: 300px; width: 100%;"></div>
+
+        <hr class="new4">  <br>       
+        <table id="myTable" class="display" style="width:100%">
+            <thead>
+               <tr>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Office</th>
+                  <th>Age</th>
+                  <th>Start date</th>
+                  <th>Salary</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+                  <td>Edinburgh</td>
+                  <td>61</td>
+                  <td>2011/04/25</td>
+                  <td>$320,800</td>
+               </tr>
+               <tr>
+                  <td>Garrett Winters</td>
+                  <td>Accountant</td>
+                  <td>Tokyo</td>
+                  <td>63</td>
+                  <td>2011/07/25</td>
+                  <td>$170,750</td>
+               </tr>
+               <tr>
+                  <td>Ashton Cox</td>
+                  <td>Junior Technical Author</td>
+                  <td>San Francisco</td>
+                  <td>66</td>
+                  <td>2009/01/12</td>
+                  <td>$86,000</td>
+               </tr>
+               <tr>
+                  <td>Cedric Kelly</td>
+                  <td>Senior Javascript Developer</td>
+                  <td>Edinburgh</td>
+                  <td>22</td>
+                  <td>2012/03/29</td>
+                  <td>$433,060</td>
+               </tr>
+               <tr>
+                <td>Tiger Nixon</td>
+                <td>System Architect</td>
+                <td>Edinburgh</td>
+                <td>61</td>
+                <td>2011/04/25</td>
+                <td>$320,800</td>
+             </tr>
+             <tr>
+                <td>Garrett Winters</td>
+                <td>Accountant</td>
+                <td>Tokyo</td>
+                <td>63</td>
+                <td>2011/07/25</td>
+                <td>$170,750</td>
+             </tr>
+             <tr>
+                <td>Ashton Cox</td>
+                <td>Junior Technical Author</td>
+                <td>San Francisco</td>
+                <td>66</td>
+                <td>2009/01/12</td>
+                <td>$86,000</td>
+             </tr>
+             <tr>
+                <td>Cedric Kelly</td>
+                <td>Senior Javascript Developer</td>
+                <td>Edinburgh</td>
+                <td>22</td>
+                <td>2012/03/29</td>
+                <td>$433,060</td>
+             </tr><tr>
+                  <td>Tiger Nixon</td>
+                  <td>System Architect</td>
+                  <td>Edinburgh</td>
+                  <td>61</td>
+                  <td>2011/04/25</td>
+                  <td>$320,800</td>
+               </tr>
+               <tr>
+                  <td>Garrett Winters</td>
+                  <td>Accountant</td>
+                  <td>Tokyo</td>
+                  <td>63</td>
+                  <td>2011/07/25</td>
+                  <td>$170,750</td>
+               </tr>
+               <tr>
+                  <td>Ashton Cox</td>
+                  <td>Junior Technical Author</td>
+                  <td>San Francisco</td>
+                  <td>66</td>
+                  <td>2009/01/12</td>
+                  <td>$86,000</td>
+               </tr>
+               <tr>
+                  <td>Cedric Kelly</td>
+                  <td>Senior Javascript Developer</td>
+                  <td>Edinburgh</td>
+                  <td>22</td>
+                  <td>2012/03/29</td>
+                  <td>$433,060</td>
+               </tr>
+            </tbody>
+        </table>
+        
+        <p><br></p>
     </body>
 
     <div class="footer">
