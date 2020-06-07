@@ -1,244 +1,123 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <!-- meta tags -->
-        <meta name="author" content="Rijan Chapagain">
-        <meta name="keywords" content="Rijan, Assignment">
-        <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
-        <meta content="utf-8" http-equiv="encoding" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">        
-        
-        <!--build:css-->
-        <!--generic build:css-->
-        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
-        <!-- Custom CSS -->
-        <link rel="stylesheet" type="text/css" href="/css" />
+   <head>
+      <!-- meta tags -->
+      <meta name="author" content="Rijan Chapagain">
+      <meta name="keywords" content="Rijan, Assignment">
+      <meta content="text/html;charset=utf-8" http-equiv="Content-Type" />
+      <meta content="utf-8" http-equiv="encoding" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">        
+      
+      <!--build:css-->
+      <!--generic build:css-->
+      <link rel="stylesheet" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css"/>
+      <!-- Custom CSS -->
+      <link rel="stylesheet" type="text/css" href="/css" />
 
-        <!--build:js-->
-        <!--generic build:js-->
-        <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-        <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
-        <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
-        <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
-       
-        <!--Custom js-->
-        <!-- <script type="text/javascript" src="/js/jqueryGraph"></script> -->
-        <!-- <script type="text/javascript" src="/js/jqueryTable"></script> -->
-        <script type="text/javascript" src="/js/htmlValidator"></script>
- 
-        <!-- endbuild -->
+      <!--build:js-->
+      <!--generic build:js-->
+      <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+      <script type="text/javascript" src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+      <script type="text/javascript" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+      
+      <!--Custom js-->
+      <script type="text/javascript" src="/js/htmlValidator"></script>
 
-        <title>Weather Forcast</title>
-    </head>
-    
-    <body>
-        <h1>Welcome to Weather view</h1> 
-        <hr class="new4"> 
-        <form id="myForm" name="myForm" action="/check" onsubmit="return validateForm()" method="POST">
+      <!-- endbuild -->
 
-            <!-- <label for="start">Start Year:</label>
-            <input type="month" id="start" name="month" min="2007-01" max="2016-02" value="2008-01"><br><br> -->
+      <title>Weather Forcast</title>
+   </head>
+   
+   <body>
+      <h1>Welcome to Weather Forecast</h1> 
+      <hr class="new4"> 
+      <form id="myForm" name="myForm" onsubmit="return validateForm()" method="POST">
 
-            <label for="year">Year: </label>
-            <input type="text" list = "year" name="year" id="yearTxt" value="2008" autofocus required>
-                <datalist name="years" id="year">
-                    <option name="op1" value = "2007"></option>
-                    <option name="op2" value = "2008"></option>
-                    <option name="op3" value = "2009"></option>
-                    <option name="op4" value = "2010"></option>
-                    <option name="op5" value = "2011"></option>
-                    <option name="op6" value = "2012"></option>
-                    <option name="op7" value = "2013"></option>
-                    <option name="op8" value = "2014"></option>
-                    <option name="op9" value = "2015"></option>
-                    <option name="op10" value = "2016"></option>
-                </datalist>
-            <a id="message"></a>
-            <br>
-            <br>
-         
-            <label for="sMonth">Start Month: </label>
-            <input type="text" list = "sMonth" name="sMonth" id="sMonthTxt" value="January" required>
-                <datalist name="sMonth" id="sMonth">
-                    <option name="op1" value = "January"></option>
-                    <option name="op2" value = "Febuary"></option>
-                    <option name="op3" value = "March"></option>
-                    <option name="op4" value = "April"></option>
-                    <option name="op5" value = "May"></option>
-                    <option name="op6" value = "June"></option>
-                    <option name="op7" value = "July"></option>
-                    <option name="op8" value = "August"></option>
-                    <option name="op9" value = "September"></option>
-                    <option name="op10" value = "October"></option>
-                    <option name="op11" value = "November"></option>
-                    <option name="op12" value = "December"></option>
-                </datalist>
-            <a id="sMessage"></a>
-            <br>
+      <label for="year">Year: </label>
+         <input type="text" list = "year" name="year" id="yearTxt" value="2008" autofocus required>
+               <datalist name="years" id="year">
+                  <option name="op1" value = "2007"></option>
+                  <option name="op2" value = "2008"></option>
+                  <option name="op3" value = "2009"></option>
+                  <option name="op4" value = "2010"></option>
+                  <option name="op5" value = "2011"></option>
+                  <option name="op6" value = "2012"></option>
+                  <option name="op7" value = "2013"></option>
+                  <option name="op8" value = "2014"></option>
+                  <option name="op9" value = "2015"></option>
+                  <option name="op10" value = "2016"></option>
+               </datalist>
+         <a id="message"></a>
+         <br><br>
+      
+         <label for="sMonth">Start Month: </label>
+         <input type="text" list = "sMonth" name="sMonth" id="sMonthTxt" value="January" required>
+               <datalist name="sMonth" id="sMonth">
+                  <option name="op1" value = "January"></option>
+                  <option name="op2" value = "Febuary"></option>
+                  <option name="op3" value = "March"></option>
+                  <option name="op4" value = "April"></option>
+                  <option name="op5" value = "May"></option>
+                  <option name="op6" value = "June"></option>
+                  <option name="op7" value = "July"></option>
+                  <option name="op8" value = "August"></option>
+                  <option name="op9" value = "September"></option>
+                  <option name="op10" value = "October"></option>
+                  <option name="op11" value = "November"></option>
+                  <option name="op12" value = "December"></option>
+               </datalist>
+         <a id="sMessage"></a>
+         <br>
 
-            <label for="eMonth">End Month: </label>
-            <input type="text" list = "eMonth" name="eMonth" id="eMonthTxt" value="December" required>
-                <datalist name="eMonth" id="eMonth">
-                    <option name="op1" value = "January"></option>
-                    <option name="op2" value = "Febuary"></option>
-                    <option name="op3" value = "March"></option>
-                    <option name="op4" value = "April"></option>
-                    <option name="op5" value = "May"></option>
-                    <option name="op6" value = "June"></option>
-                    <option name="op7" value = "July"></option>
-                    <option name="op8" value = "August"></option>
-                    <option name="op9" value = "September"></option>
-                    <option name="op10" value = "October"></option>
-                    <option name="op11" value = "November"></option>
-                    <option name="op12" value = "December"></option>
-                </datalist>
-            <a id="eMessage"></a>
-            <br><br>
+         <label for="eMonth">End Month: </label>
+         <input type="text" list = "eMonth" name="eMonth" id="eMonthTxt" value="December" required>
+               <datalist name="eMonth" id="eMonth">
+                  <option name="op1" value = "January"></option>
+                  <option name="op2" value = "Febuary"></option>
+                  <option name="op3" value = "March"></option>
+                  <option name="op4" value = "April"></option>
+                  <option name="op5" value = "May"></option>
+                  <option name="op6" value = "June"></option>
+                  <option name="op7" value = "July"></option>
+                  <option name="op8" value = "August"></option>
+                  <option name="op9" value = "September"></option>
+                  <option name="op10" value = "October"></option>
+                  <option name="op11" value = "November"></option>
+                  <option name="op12" value = "December"></option>
+               </datalist>
+         <a id="eMessage"></a>
+         <br><br>
 
-            <b>Measurements: </b>
-            Wind Speed<input type="radio" name="measure" value="wind" required >
-            Solar Radiation<input type="radio" name="measure" value="solar">
+         <b>Measurements(for graph): </b>
+            Wind Speed<input type="radio" name="measure" value="ws" required >
+            Solar Radiation<input type="radio" name="measure" value="sr">
             Both<input type="radio" name="measure" value="both" checked><br/><br/>
 
-            <b>Output Format: </b>
-            Table<input type="radio" name="format" value="table" required checked>
+         <b>Output Format: </b>
+            Table<input type="radio" name="format" value="table" required>
             Graph<input type="radio" name="format" value="graph">
-            Both<input type="radio" name="format" value="both"><br/><br/>
+            Both<input type="radio" name="format" value="both" checked><br/><br/>
 
-            <a id="messageDetail"></a>
-            <a id="sMessageDetail"></a>
-            <a id="eMessageDetail"></a><br>
-            <input type="submit" class="submit" id="submit" name="submit" value="Submit">
-            <input type="reset" class="reset" name="reset" value="Reset"><br>       
-                  
+         <a id="messageDetail"></a>
+         <a id="sMessageDetail"></a>
+         <a id="eMessageDetail"></a><br>
+         <input type="submit" class="submit" id="submit" name="submit" value="Submit">
+         <input type="reset" class="reset" name="reset" value="Reset"><br>                
+      </form>
+      
+      <hr class="new4"><br>
+      <div class="chartContainer" style="height: 300px; width: 100%;"></div>
+      
+      <div class="tableData">
+         <hr class="new4">
+         <table id="table" class="display" style="width:100%"></table>
+      </div> 
 
-            
-        </form>
-            
-        <!-- <button id="action-button">Click me to load info!</button> -->
-            <div id="info"></div>
-            
-        
-        <hr class="new4"> 
+   <p><br><br></p>
+   </body>
 
-        <div class="chartContainer" style="height: 300px; width: 100%;"></div>
-
-        <hr class="new4">  <br>       
-        <table id="myTable" class="display" style="width:100%">
-            <thead>
-               <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Office</th>
-                  <th>Age</th>
-                  <th>Start date</th>
-                  <th>Salary</th>
-               </tr>
-            </thead>
-            <tbody>
-               <tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-               </tr>
-               <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>63</td>
-                  <td>2011/07/25</td>
-                  <td>$170,750</td>
-               </tr>
-               <tr>
-                  <td>Ashton Cox</td>
-                  <td>Junior Technical Author</td>
-                  <td>San Francisco</td>
-                  <td>66</td>
-                  <td>2009/01/12</td>
-                  <td>$86,000</td>
-               </tr>
-               <tr>
-                  <td>Cedric Kelly</td>
-                  <td>Senior Javascript Developer</td>
-                  <td>Edinburgh</td>
-                  <td>22</td>
-                  <td>2012/03/29</td>
-                  <td>$433,060</td>
-               </tr>
-               <tr>
-                <td>Tiger Nixon</td>
-                <td>System Architect</td>
-                <td>Edinburgh</td>
-                <td>61</td>
-                <td>2011/04/25</td>
-                <td>$320,800</td>
-             </tr>
-             <tr>
-                <td>Garrett Winters</td>
-                <td>Accountant</td>
-                <td>Tokyo</td>
-                <td>63</td>
-                <td>2011/07/25</td>
-                <td>$170,750</td>
-             </tr>
-             <tr>
-                <td>Ashton Cox</td>
-                <td>Junior Technical Author</td>
-                <td>San Francisco</td>
-                <td>66</td>
-                <td>2009/01/12</td>
-                <td>$86,000</td>
-             </tr>
-             <tr>
-                <td>Cedric Kelly</td>
-                <td>Senior Javascript Developer</td>
-                <td>Edinburgh</td>
-                <td>22</td>
-                <td>2012/03/29</td>
-                <td>$433,060</td>
-             </tr><tr>
-                  <td>Tiger Nixon</td>
-                  <td>System Architect</td>
-                  <td>Edinburgh</td>
-                  <td>61</td>
-                  <td>2011/04/25</td>
-                  <td>$320,800</td>
-               </tr>
-               <tr>
-                  <td>Garrett Winters</td>
-                  <td>Accountant</td>
-                  <td>Tokyo</td>
-                  <td>63</td>
-                  <td>2011/07/25</td>
-                  <td>$170,750</td>
-               </tr>
-               <tr>
-                  <td>Ashton Cox</td>
-                  <td>Junior Technical Author</td>
-                  <td>San Francisco</td>
-                  <td>66</td>
-                  <td>2009/01/12</td>
-                  <td>$86,000</td>
-               </tr>
-               <tr>
-                  <td>Cedric Kelly</td>
-                  <td>Senior Javascript Developer</td>
-                  <td>Edinburgh</td>
-                  <td>22</td>
-                  <td>2012/03/29</td>
-                  <td>$433,060</td>
-               </tr>
-            </tbody>
-        </table>
-        
-        <p><br></p>
-    </body>
-
-    <div class="footer">
-        <p>copyright act: &copy; 2020 Rijan Chapagain</p>
-    </div>
+   <div class="footer">
+      <p>copyright act: &copy; 2020 Rijan Chapagain</p>
+   </div>
 </html>

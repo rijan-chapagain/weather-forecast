@@ -1,16 +1,18 @@
 var fs = require('fs');
 var xmldom = require('xmldom').DOMParser;
-var fs = require('fs');
 const xml2js = require('xml2js');
-var parser, doc, tNodes;
-var processing = require('./processing');
+var parser, doc;
 
+var processing = require('./processing');
 parser = new xmldom();
 
 /**
+ * display message in terminal
+ * call display function
  * 
  * @param {object} request 
  * @param {object} response 
+ * @param {object} result
  */
 function reqDisplay(request, response, result)
 {
@@ -18,10 +20,17 @@ function reqDisplay(request, response, result)
     display(request, response, result);
 }
 
+/**
+ * compare downloaded file with data file using buffer
+ * if true send download path else data path
+ * 
+ * @param {object} request 
+ * @param {object} response 
+ * @param {object} result 
+ */
 function display(request, response, result)
 {
     var year = (result.year);
-    var format = (result.format);
 
     if(year >= '2010')
     {
@@ -31,124 +40,74 @@ function display(request, response, result)
     {
         year += '.xml';
     }
-   
-    var path = `../data/${year}`;
 
-    console.log(path)    
+    var downloadPath = (`../downloads/${year}`);
+    var dataPath = (`../data/${year}`);
 
-    function convertXml2Json(request, callback) {
-        if(year.includes("xml"))
-        {
-            console.log("you are in xml file");
-            fs.readFile(path, 'utf-8', function (err, data) 
+    const downloadPathBuffer = Buffer.from(fs.readFileSync(`../downloads/${year}`));
+    const dataPathBuffer = Buffer.from(fs.readFileSync(`../data/${year}`));
+
+    var checkBuffer = downloadPathBuffer.includes(dataPathBuffer);
+    
+    if(checkBuffer)
+    {
+        readDataFile(downloadPath, callbackResult => {
+            processing.calculation(request, response, callbackResult);
+        });   
+    }
+    else
+    {
+        readDataFile(dataPath, callbackResult => {
+            processing.calculation(request, response, callbackResult);
+        });
+    }
+      
+    /**
+     * callback function parsing XML and JSON files 
+     * and return data in JSON format
+     * 
+     * @param {object} request 
+     * @param {object} callback 
+     */
+    function readDataFile(path, callback) {
+        if(path.includes("xml"))
             {
-                if (err)
+                console.log("Converting XML file to JSON");
+                fs.readFile(path, 'utf-8', function (err, data) 
                 {
-                    throw err;
-                }
-                doc = parser.parseFromString(data, 'application/xml');
-                // tNodes = doc.getElementsByTagName('weather');
-
-                xml2js.parseString(doc, { explicitArray : false }, (err, result) => {
-                    if(err) {
+                    if (err)
+                    {
                         throw err;
                     }
-                
-                    var recordData = result.weather.record;
-                    console.log(typeof(recordData));
+                    doc = parser.parseFromString(data, 'application/xml');
 
-                    callback(recordData);
+                    xml2js.parseString(doc, { explicitArray : false }, (err, result) => {
+                        if(err) {
+                            throw err;
+                        }                    
+                        callback(result.weather.record);
+                    });
                 });
-            });
-        }
-        else if(year.includes("json"))
-        {
-            console.log("you are in json file");
-            fs.readFile(path, 'utf-8', function (err, data) 
+            }
+            else if(path.includes("json"))
             {
-                if (err)
+                console.log("Reading JSON file");
+                fs.readFile(path, 'utf-8', function (err, data) 
                 {
-                    throw err;
-                }
-                var jsonobj = JSON.parse(data);
-                var recordData = jsonobj.weather.record;
-
-                callback(recordData);
-            });
-        }
-        else
-        {
-            callback(null);
-        }
-    }//end of collectRequest function
-
-    convertXml2Json(request, callbackResult => {
-        // console.log(callbackResult);
-        // userRequest(callbackResult);
-        processing.calculation(request, response, callbackResult, result);
-    });
-
-    function userRequest(callbackResult)
-    {
-        //check user requested date
-        if(format === "table")
-        {
-            console.log("format was table");
-            
-            // console.log(callbackResult);
-
-        }
-        else if(format === "graph")
-        {
-            console.log("format was graph");
-            // 
-        }
-        else if(format === "both")
-        {
-            console.log("format was both");
-            // 
-        }
-
-        //output format
-        // if(format === "table")
-        // {
-        //     console.log("format was table");
-            
-        //     console.log(callbackResult);
-
-        // }
-        // else if(format === "graph")
-        // {
-        //     console.log("format was graph");
-        //     // 
-        // }
-        // else if(format === "both")
-        // {
-        //     console.log("format was both");
-        //     // 
-        // }
-
-        //output measure
-
-        // if(measure === "ws")
-        // {
-        //     console.log("measure was wind speed");
-            
-        //     console.log(callbackResult);
-
-        // }
-        // else if(measure === "sr")
-        // {
-        //     console.log("measure was solar radiation");
-        //     // 
-        // }
-        // else if(measure === "both")
-        // {
-        //     console.log("measure was both");
-        //     // 
-        // }
-    }
-}
+                    if (err)
+                    {
+                        throw err;
+                    }
+                    var jsonobj = JSON.parse(data);
+                    callback(jsonobj.weather.record);
+                });
+            }
+            else
+            {
+                callback(null);
+            }
+    }//end of readFile function
+}// end of display function
 
 exports.reqDisplay = reqDisplay;
 exports.display = display;

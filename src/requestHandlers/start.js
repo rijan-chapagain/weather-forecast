@@ -15,7 +15,7 @@ var download = require('./download');
 function reqStart(request, response){
     console.log("Request handler 'start' was called.");
 
-    fs.readFile('./html/index.html', function (err, html) {
+    fs.readFile("./html/index.html", function (err, html) {
         if (err) {
             throw err; 
         }   
@@ -33,46 +33,17 @@ function reqStart(request, response){
  * @param {object} response 
  */
 function reqCheck(request, response){
-    console.log("Request handler 'check' is processing.");
-    
-    collectRequestData(request, result => {
-        console.log(result);
+    console.log("Request handler 'reqCheck' is processing.");
+
+    response.writeHead(200, { 'Content-Type': 'text/plain' });
+    request.on('data', function (data) 
+    {
+        var body = data.toString();
+        var result = parse(body);
+
         download.reqDownload(result);
         display.reqDisplay(request, response, result);
-
-        // if(`${result.format}`=== "both"){
-        //     reqStart(request, response);
-        // }
-        // else if(`${result.format}`=== ""){
-        //     reqStart(request, response);
-        // }
-        // else{
-        //     reqStart(request,response);
-        // }
     });
-
-    function collectRequestData(request, callback) {
-        const FORM_URLENCODED = 'application/x-www-form-urlencoded';
-        if(request.headers['content-type'] === FORM_URLENCODED){
-            
-            let body = [];
-            
-            request.on('data', (chunk) => {
-                body += chunk.toString(); //convert buffer to string
-            });
-
-            request.on('end', () => {
-                callback(parse(body))
-
-                response.on('error', (err) => {
-                    console.error(err);
-                });
-            });
-        }
-        else{
-            callback(null);
-        }
-    }//end of collectRequest function
 }//end of reqCheck function
 
 exports.reqStart = reqStart;

@@ -1,12 +1,18 @@
 var fs = require('fs');
 const http = require('http');
+var display = require('./display');
 
+/**
+ * Download data file from murdoch url
+ * and save it to the download dir 
+ * 
+ * @param {object} result 
+ */
 function reqDownload(result)
     {
         console.log("Request handler 'download' is downloading data file")
        
         var year = (result.year);
-        console.log(year);
         
         if(year >= '2010')
         {
@@ -17,7 +23,7 @@ function reqDownload(result)
                 res.pipe(file);
             });
         }
-        if(year <= '2009')
+        else if(year <= '2009')
         {
             var url = `http://it.murdoch.edu.au/~S900432D/ict375/data/${year}.xml`;
             const file = fs.createWriteStream(`../downloads/${year}.xml`);
@@ -25,6 +31,10 @@ function reqDownload(result)
             http.get(url, function(res) {        
                 res.pipe(file);
             });
+        }
+        else
+        {
+            console.log("Error downloading file");
         }
     }//end of reqDownload function
 
