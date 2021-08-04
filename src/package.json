@@ -6,7 +6,7 @@
   "git": "https://github.com/rijan-chapagain/weather-forecast.git",
   "dependencies": {
     "xml2js": "^0.4.23",
-    "xmldom": "^0.3.0"
+    "xmldom": "^0.6.0"
   },
   "devDependencies": {},
   "scripts": {
